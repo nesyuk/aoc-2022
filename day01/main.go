@@ -46,6 +46,7 @@ func updateMaxN(n int, m ...*int) {
 
 func main() {
 	r, _ := os.Open("./day01/data/input.txt")
+	defer r.Close()
 	sc := bufio.NewScanner(r)
 
 	// fmt.Println(topN(sc, 1)) // part1
