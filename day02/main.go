@@ -52,7 +52,7 @@ func part1(r io.Reader) int {
 }
 
 func main() {
-	r, _ := os.Open("./day02/data/input.data")
+	r, _ := os.Open("./day02/data/input.txt")
 	defer r.Close()
 
 	// fmt.Println(part1(r))
