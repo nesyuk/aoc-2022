@@ -12,38 +12,31 @@ func dirSize(sc *bufio.Scanner, sizeSum *int, minDelSize int, delDirSize *int) i
 	sc.Scan()
 	line := sc.Text()
 	size := 0
-	dirs := 0
 	if line == "$ ls" {
 		for sc.Scan() {
 			line = sc.Text()
-			if strings.HasPrefix(line, "dir") {
-				dirs++
-			} else if !strings.HasPrefix(line, "$") {
+			if !strings.HasPrefix(line, "$") {
 				fileSize, _ := strconv.Atoi(strings.Split(line, " ")[0])
 				size += fileSize
-			} else {
+			} else if !strings.HasPrefix(line, "dir") {
 				break
 			}
 		}
 	}
 	for strings.HasPrefix(line, "$ cd") {
 		if strings.HasPrefix(line, "$ cd ..") {
-			if size <= 100000 {
-				*sizeSum += size
-			}
-			if size >= minDelSize && size < *delDirSize {
-				*delDirSize = size
-			}
-			return size
+			break
 		}
 		size += dirSize(sc, sizeSum, minDelSize, delDirSize)
 
 		sc.Scan()
 		line = sc.Text()
 	}
+	// part 1
 	if size <= 100000 {
 		*sizeSum += size
 	}
+	// part 2
 	if size >= minDelSize && size < *delDirSize {
 		*delDirSize = size
 	}
